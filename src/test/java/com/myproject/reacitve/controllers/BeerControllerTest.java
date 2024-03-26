@@ -30,9 +30,6 @@ class BeerControllerTest {
     @Autowired
     WebTestClient webTestClient;
 
-    @Autowired
-    ObjectMapper objectMapper;
-
 
     @Test
     @Order(1)
@@ -157,7 +154,7 @@ class BeerControllerTest {
     }
 
     @Test
-    @Order(999)
+    @Order(998)
     void testDeleteBeer() {
 
         webTestClient.delete().uri(BeerController.BEER_PATH_ID, 1)
