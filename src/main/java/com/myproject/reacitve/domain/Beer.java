@@ -1,5 +1,7 @@
 package com.myproject.reacitve.domain;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,8 +21,16 @@ public class Beer {
 
     @Id
     private Integer id;
+
+    @NotNull
+    @Size(min = 3, max = 255)
     private String beerName;
+
+    @Size(min = 3, max = 255)
     private String beerStyle;
+
+    @NotNull
+    @Size(min = 3, max = 255)
     private String upc;
     private Integer quantityOnHand;
     private BigDecimal price;

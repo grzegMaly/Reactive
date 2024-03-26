@@ -23,14 +23,15 @@ public class BeerDTO {
     private Integer id;
 
     @NotNull
-    @Size(min = 3, max = 255)
+    @NotBlank
     private String beerName;
 
-    @Size(min = 3, max = 255)
+    @NotNull
+    @NotBlank
     private String beerStyle;
 
     @NotNull
-    @Size(min = 3, max = 255)
+    @NotBlank
     private String upc;
     private Integer quantityOnHand;
     private BigDecimal price;
