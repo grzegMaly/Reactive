@@ -54,6 +54,7 @@ class BeerControllerTest {
     }
 
     @Test
+    @Order(3)
     void testGetBeerByIdBadData() {
 
         webTestClient.get().uri(BeerController.BEER_PATH_ID, 999)
@@ -62,7 +63,7 @@ class BeerControllerTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     void testCreateBeer() {
 
         webTestClient.post().uri(BeerController.BEER_PATH)
@@ -74,6 +75,7 @@ class BeerControllerTest {
     }
 
     @Test
+    @Order(5)
     void testCreateBeerBadData() {
 
         Beer testBeer = BeerRepositoryTest.getTestBeer();
@@ -87,7 +89,7 @@ class BeerControllerTest {
     }
 
     @Test
-    @Order(3)
+    @Order(6)
     void testUpdateBeer() {
 
         webTestClient.put().uri(BeerController.BEER_PATH_ID, 1)
@@ -97,7 +99,7 @@ class BeerControllerTest {
     }
 
     @Test
-    @Order(4)
+    @Order(7)
     void testUpdateBeerBadData() {
 
         Beer testBeer = BeerRepositoryTest.getTestBeer();
@@ -110,7 +112,7 @@ class BeerControllerTest {
     }
 
     @Test
-    @Order(5)
+    @Order(8)
     void testUpdateBeerNotFound() {
 
         webTestClient.put().uri(BeerController.BEER_PATH_ID, 99)
@@ -120,7 +122,7 @@ class BeerControllerTest {
     }
 
     @Test
-    @Order(6)
+    @Order(9)
     void testPatchBeer() throws JsonProcessingException {
 
         BeerDTO testBeer = new BeerDTO();
@@ -141,7 +143,7 @@ class BeerControllerTest {
     }
 
     @Test
-    @Order(7)
+    @Order(10)
     void testPatchBeerIdNotFound() {
 
         BeerDTO testBeer = new BeerDTO();

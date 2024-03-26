@@ -1,5 +1,6 @@
 package com.myproject.reacitve.controllers;
 
+import com.myproject.reacitve.domain.Customer;
 import com.myproject.reacitve.model.CustomerDTO;
 import com.myproject.reacitve.repositories.CustomerRepositoryTest;
 import org.junit.jupiter.api.MethodOrderer;
@@ -33,6 +34,8 @@ class CustomerControllerTest {
                 .expectBody().jsonPath("$.size()").isEqualTo(3);
     }
 
+
+
     @Test
     @Order(2)
     void testGetCustomerById() {
@@ -46,6 +49,15 @@ class CustomerControllerTest {
 
     @Test
     @Order(3)
+    void testGetCustomerByIdBadData() {
+
+        webTestClient.get().uri(CustomerController.CUSTOMER_PATH_ID, 999)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    @Order(4)
     void testCreateNewCustomer() {
 
         webTestClient.post().uri(CustomerController.CUSTOMER_PATH)
@@ -56,8 +68,21 @@ class CustomerControllerTest {
     }
 
     @Test
-    @Order(4)
-    void testUpdateCustomer() {
+    @Order(5)
+    void testCreateNewCustomerBadData() {
+
+        Customer testCustomer = CustomerRepositoryTest.getTestCustomer();
+        testCustomer.setCustomerName("");
+
+        webTestClient.post().uri(CustomerController.CUSTOMER_PATH)
+                .body(Mono.just(testCustomer), CustomerDTO.class)
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
+    @Order(6)
+    void testUpdateCustomerById() {
 
         webTestClient.put().uri(CustomerController.CUSTOMER_PATH_ID, 1)
                 .body(Mono.just(CustomerRepositoryTest.getTestCustomer()), CustomerDTO.class)
@@ -66,11 +91,44 @@ class CustomerControllerTest {
     }
 
     @Test
-    @Order(999)
-    void testDeleteCustomer() {
+    @Order(7)
+    void testUpdateCustomerByIdBadData() {
+
+        Customer testCustomer = CustomerRepositoryTest.getTestCustomer();
+        testCustomer.setCustomerName("");
+
+        webTestClient.put().uri(CustomerController.CUSTOMER_PATH_ID, 1)
+                .body(Mono.just(testCustomer), CustomerDTO.class)
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
+    @Order(7)
+    void testUpdateCustomerByIdNotFound() {
+
+        webTestClient.put().uri(CustomerController.CUSTOMER_PATH_ID, 99)
+                .body(Mono.just(CustomerRepositoryTest.getTestCustomer()), CustomerDTO.class)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+
+    @Test
+    @Order(998)
+    void testDeleteCustomerById() {
 
         webTestClient.delete().uri(CustomerController.CUSTOMER_PATH_ID, 1)
                 .exchange()
                 .expectStatus().isNoContent();
+    }
+
+    @Test
+    @Order(999)
+    void testDeleteCustomerByIdNotFound() {
+
+        webTestClient.delete().uri(CustomerController.CUSTOMER_PATH_ID, 99)
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }

@@ -20,6 +20,8 @@ import java.time.LocalDateTime;
 public class CustomerDTO {
 
     private Integer id;
+
+    @Size(min = 3, max = 255)
     private String customerName;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
